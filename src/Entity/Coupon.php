@@ -6,8 +6,10 @@ use App\Enum\CouponTypeEnum;
 use App\Repository\CouponRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CouponRepository::class)]
+#[UniqueEntity('code')]
 class Coupon
 {
     #[ORM\Id]
