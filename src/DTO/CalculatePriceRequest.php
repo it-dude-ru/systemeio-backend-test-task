@@ -17,7 +17,6 @@ class CalculatePriceRequest
   )]
   public string $taxNumber;
 
-  #[Assert\Optional]
   #[Assert\Length(min: 2, max: 20)]
   public ?string $couponCode = null;
 }

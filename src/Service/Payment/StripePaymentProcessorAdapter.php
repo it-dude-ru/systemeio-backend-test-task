@@ -6,9 +6,12 @@ use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
 
 class StripePaymentProcessorAdapter implements PaymentProcessorInterface
 {
-    public function __construct(
-        private StripePaymentProcessor $processor
-    ) {}
+    private StripePaymentProcessor $processor;
+
+    public function __construct()
+    {
+        $this->processor = new StripePaymentProcessor();
+    }
 
     public function pay(string $amount): void
     {

@@ -22,13 +22,13 @@ class PriceCalculator
         }
 
         // if $price < 0
-        if (bccomp($price, '0', self::SCALE) === -1) {
+        if (\bccomp($price, '0', self::SCALE) === -1) {
             $price = '0';
         }
 
         $taxRate = $this->getTaxRate($taxNumber);
-        $taxAmount = bcmul($price, $taxRate, self::SCALE);
-        $price = bcadd($price, $taxAmount, self::SCALE);
+        $taxAmount = \bcmul($price, $taxRate, self::SCALE);
+        $price = \bcadd($price, $taxAmount, self::SCALE);
 
         return $price;
     }
@@ -39,7 +39,7 @@ class PriceCalculator
         $value = $coupon->getValue();
 
         return match ($coupon->getType()) {
-            CouponTypeEnum::Fixed => bcsub($price, $value, self::SCALE),
+            CouponTypeEnum::Fixed => \bcsub($price, $value, self::SCALE),
 
             CouponTypeEnum::Percent => $this->applyPercentDiscount(
                 $price,
@@ -50,20 +50,20 @@ class PriceCalculator
 
     private function applyPercentDiscount(string $price, string $percent): string
     {
-        $rate = bcdiv($percent, '100', 4);
+        $rate = \bcdiv($percent, '100', 4);
 
-        $discount = bcmul($price, $rate, self::SCALE);
+        $discount = \bcmul($price, $rate, self::SCALE);
 
-        return bcsub($price, $discount, self::SCALE);
+        return \bcsub($price, $discount, self::SCALE);
     }
 
     private function getTaxRate(string $taxNumber): string
     {
         return match (true) {
-            str_starts_with($taxNumber, 'DE') => '0.19',
-            str_starts_with($taxNumber, 'IT') => '0.22',
-            str_starts_with($taxNumber, 'GR') => '0.24',
-            str_starts_with($taxNumber, 'FR') => '0.20',
+            \str_starts_with($taxNumber, 'DE') => '0.19',
+            \str_starts_with($taxNumber, 'IT') => '0.22',
+            \str_starts_with($taxNumber, 'GR') => '0.24',
+            \str_starts_with($taxNumber, 'FR') => '0.20',
             default => throw new \RuntimeException('Unknown tax number'),
         };
     }
