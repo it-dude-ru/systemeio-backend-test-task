@@ -80,11 +80,21 @@ class ValidPaymentProcessorValidatorTest extends TestCase
 
         $this->context
             ->buildViolation($constraint->message)
-            ->withArguments([
-                '{{ value }}' => 'unknown',
-                '{{ available_processors }}' => 'paypal, stripe',
-            ])
             ->willReturn($this->violationBuilder->reveal())
+            ->shouldBeCalledOnce();
+
+        $this->violationBuilder
+            ->setParameter('{{ value }}', 'unknown')
+            ->willReturn($this->violationBuilder->reveal())
+            ->shouldBeCalledOnce();
+
+        $this->violationBuilder
+            ->setParameter('{{ available_processors }}', 'paypal, stripe')
+            ->willReturn($this->violationBuilder->reveal())
+            ->shouldBeCalledOnce();
+
+        $this->violationBuilder
+            ->addViolation()
             ->shouldBeCalledOnce();
 
         $this->validator->validate('unknown', $constraint);
