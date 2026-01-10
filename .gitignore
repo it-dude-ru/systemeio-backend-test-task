@@ -16,3 +16,6 @@ compose.override.yaml
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+/var/*
+!/var/.gitkeep
