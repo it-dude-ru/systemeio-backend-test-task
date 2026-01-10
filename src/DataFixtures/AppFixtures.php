@@ -17,8 +17,8 @@ class AppFixtures extends Fixture
     ];
 
     const COUPONS = [
-        ['SALE6PERCENT', CouponTypeEnum::Percent, '15.00'],
-        ['SALE6AMOUNT', CouponTypeEnum::Fixed, '10.00'],
+        ['SALE15PERCENT', CouponTypeEnum::Percent, '15.00'],
+        ['SALE10AMOUNT', CouponTypeEnum::Fixed, '10.00'],
     ];
 
     public function load(ObjectManager $manager): void

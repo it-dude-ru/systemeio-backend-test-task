@@ -10,7 +10,7 @@ PHONY: help
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: down build install up success-message console ## Initialize environment
+init: down build install up fixtures success-message ## Initialize environment
 
 build: ## Build services.
 	${DC} build $(c)
@@ -34,6 +34,20 @@ console: ## Login in console.
 
 install: ## Install dependencies without running the whole application.
 	${DC_RUN} composer install
+
+test: ## Run PHPUnit tests.
+	${DC_RUN} bin/phpunit
+
+migrations: ## Make migrations.
+	${DC_RUN} bin/console doctrine:migrations:migrate --no-interaction
+
+fixtures: ## Purge database and load fixtures.
+	${DC_EXEC} bin/console doctrine:schema:drop --full-database --force
+	${DC_EXEC} bin/console doctrine:migrations:migrate --no-interaction
+	${DC_EXEC} bin/console doctrine:fixtures:load --no-interaction
+
+cc: ## Clear cache
+	${DC_EXEC} bin/console cache:clear
 
 success-message:
 	@echo "You can now access the application at http://localhost:8337"
