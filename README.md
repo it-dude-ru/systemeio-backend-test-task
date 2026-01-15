@@ -16,7 +16,7 @@
 - Для запуска в Windows нужен WSL2
 
 ## 🚀 Установка и запуск
-- `git clone https://github.com/it-dude-ru/systemeio-backend-test-task.git`
+- `git clone https://github.com/KharchenkoDev/systemeio-backend-test-task.git`
 - `cd systemeio-backend-test-task/`
 - `make init`
 - `make fixtures`
